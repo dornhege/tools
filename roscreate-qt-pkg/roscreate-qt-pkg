@@ -1,0 +1,22 @@
+#!/bin/bash
+
+if [ $# -lt 2 ]; then
+    echo Usage: $0 pkg_name window_name
+    exit 1
+fi
+
+mydir=$(dirname $0)
+
+PKG_NAME=$1
+WINDOW_NAME=$2
+
+roscreate-pkg $PKG_NAME roscpp
+if [ "$?" -ne 0 ]; then
+    echo Failed creating package $PKG_NAME.
+    exit 1
+else
+    echo Created package $PKG_NAME.
+fi
+
+$mydir/create-files.py $PKG_NAME $WINDOW_NAME $mydir
+
